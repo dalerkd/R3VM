@@ -24,6 +24,11 @@ public:
 	~COpcodeTranslate();
 
 public:
+	/*
+	申请初始化栈等
+	*/
+	void Init();
+
 	void SetIP32(DWORD32)throw(...);
 	void SetIP64(DWORD64)throw(...);
 
@@ -31,6 +36,7 @@ public:
 	void GetIP64(DWORD64)throw(...);
 
 	std::string GetASM();//当前IP
+	int GetOpCodeLen();//当前OpCodeLen
 
 	void WriteMemoryData_BYTE(DWORD32);
 	void WriteMemoryData_WORD(DWORD32);
