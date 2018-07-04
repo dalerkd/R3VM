@@ -32,9 +32,9 @@ constexpr unsigned long long operator "" _hash(char const* p, size_t)
 	return hash_compile_time(p);
 }
 
-int main()
+void test1()
 {
-	std::string asmStrs;
+	std::string asmStrs("jmp");
 	switch (hash_(asmStrs.c_str())) {
 	case "jmp"_hash:break;
 	case "xor"_hash:break;
@@ -113,6 +113,43 @@ int main()
 		break;
 	}
 
+}
+
+/*
+//EXCEPTION_PRIV_INSTRUCTION
+PI:当前模式下不能执行该命令
+某些寄存器写权限不足
+UD:未定义命令
+AV:访问违例
+GP:通用错误:内存引用或保护性检查
+*/
+
+#include <stdarg.h>
+
+class CH
+{
+public:
+	//vsnprintf(char *str, size_t size, const char *format, va_list ap) ?。
+	CH(const char*  format,...)
+	{
+		va_list ap;
+		va_start(ap, format);
+		char temp[256] = { 0 };
+
+		vsnprintf(temp, 256, format, ap);
+		printf("%s",temp);
+	}
+protected:
+private:
+};
+
+int main()
+{
+	CH* p = new CH("Hi");
+	delete p;
+
+
+	
     return 0;
 }
 
